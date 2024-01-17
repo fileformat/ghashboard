@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ page.title }}{%- unless page.h1 %} - {{ site.title }}{% endunless %}</title>
+    <meta name="referrer" content="unsafe-url" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+{%- if page.url == '/index.html' or page.url == '/' %}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+{%- endif %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
+</head>
+<body>
+    <main class="container">
+        <h1>
+            <img alt="logo" src="/favicon.svg" style="height:1.5em;vertical-align:top;" />&nbsp;
+            {%- if page.h1 %}{{ page.h1 }}{% else %}{{ page.title }}{% endif %}
+            {%- if page.subtitle %} <small> - {{ page.subtitle }}</small>{% endif %}
+        </h1>
+        {{ content }}
+    </main>
+</body>
+</html>
