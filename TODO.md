@@ -19,6 +19,7 @@ builds a list of actions for each repo
  * namefilter: regex on name
  * filefilter: regex on filename (from path)
  * status: `[active|all]`
+ * actions: a JSON file with a custom-generated (or saved) list of repos/actions
 
 ## badges.go
 
@@ -41,3 +42,7 @@ builds page
 Potential go libraries:
 https://github.com/knadh/koanf
 https://pkg.go.dev/github.com/google/go-github/v58/github
+
+## Maybe
+
+ * verify that the badges are on the README page.
