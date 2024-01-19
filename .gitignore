@@ -16,6 +16,7 @@ node_modules/
 .sass-cache/
 _site/
 *.swp
+test*
 *.tmp
 _tmp/
 tmp/
