@@ -7,15 +7,17 @@
 
 builds a list of repos
 
- * visibility: `[all|public|private]`
+ * public: boolean 
+ * private: boolean
  * forks: boolean
- * owners: array of owners
- * repos: a list of repos (or @filename)
+ * archived: boolean
+ * repos: a list of repos (or @filename), bypasses all flags
 
-## actions.go
+## workflows.go
 
 builds a list of actions for each repo
 
+ * ghpages: skip `pages-build-deployment` since the badges don't work
  * namefilter: regex on name
  * filefilter: regex on filename (from path)
  * status: `[active|all]`
