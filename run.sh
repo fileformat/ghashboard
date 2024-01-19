@@ -12,6 +12,9 @@ if [ -f ".env" ]; then
 fi
 
 rm -f test.md
-go run ghashboard.go repos.go workflows.go templates.go test.md
+#go run ghashboard.go repos.go workflows.go templates.go test.md
+
+unset OWNERS
+go run *.go --owners=vectorlogozone,FileFormatInfo,fileformat --output=csv -
 
 

@@ -88,6 +88,7 @@ func main() {
 	}
 
 	fmt.Printf("INFO: owners = %v\n", owners)
+
 	var allRepos []*github.Repository
 	for _, owner := range owners {
 		fmt.Printf("INFO: loading repos for %s...\n", owner)
@@ -111,10 +112,12 @@ func main() {
 		}
 		fmt.Printf("INFO: workflows for %s: %d\n", *repo.FullName, len(workflows))
 		if len(workflows) > 0 {
+			SortWorkflowsCaseInsensitive(workflows)
 			allData = append(allData, &MetaRepo{Workflows: workflows, Repo: repo})
 		}
 	}
-	fmt.Printf("INFO: total workflows: %d\n", len(allData))
+	fmt.Printf("INFO: repos with workflows: %d\n", len(allData))
+	SortReposCaseInsensitive(allData)
 
 	filename := f.Arg(0)
 	var writer io.Writer
