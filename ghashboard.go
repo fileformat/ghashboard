@@ -48,6 +48,7 @@ func usage(f *flag.FlagSet) {
 	fmt.Printf("      file: output file (default: stdout)\n")
 	fmt.Printf("\n")
 	fmt.Printf("      options can also be set via environment variables\n")
+	fmt.Printf("      set GH_TOKEN to use a personal access token and avoid rate limit errors.\n")
 }
 
 func main() {
@@ -139,7 +140,7 @@ func main() {
 		}
 		writer.Write(jsonStr)
 	} else {
-		tmpl, tmplErr := GetStandardTemplate("markdown")
+		tmpl, tmplErr := GetStandardTemplate(Output)
 		if tmplErr != nil {
 			fmt.Printf("Error: %v\n", tmplErr)
 			os.Exit(1)

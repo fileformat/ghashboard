@@ -1,0 +1,7 @@
+Repo,Workflow,Badge,URL
+{{- range . -}}
+    {{- $repo := .Repo.Name -}}
+    {{- range .Workflows }} 
+{{ $repo}}, {{.Name}}, {{ .BadgeURL }}
+    {{- end -}}
+{{ end }}
