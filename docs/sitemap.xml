@@ -1,0 +1,16 @@
+---
+# Remember to set production_url in your _config.yml file!
+title : Sitemap
+layout: none
+noindex: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="sitemap.xslt" ?>
+{% assign sorted_pages = site.pages | sort:'url' -%}
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{% for page in sorted_pages %}{% if page.noindex %}{% else %}	<url><loc>{{site.production_url}}{{ page.url }}</loc></url>
+{% endif %}{% endfor -%}
+{% assign sorted_posts = site.posts | sort:'url' -%}
+	{% for post in sorted_posts %}{% if post.noindex or post.draft %}{% else %}	<url><loc>{{site.production_url}}{{ post.url }}</loc></url>
+{% endif %}{% endfor %}</urlset>
+

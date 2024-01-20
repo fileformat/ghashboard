@@ -1,7 +1,11 @@
 # To Do
 
+- [ ] Something is wrong with the links
 - [ ] dogfood GHA: build a ghashboard of my stuff
 - [ ] demo GHA: find a couple orgs with a middling number of GHAs for a demo ghashboard
+- [ ] switch template data from array to struct with array as a property, and add more properties (Created, Header)
+- [ ] support multi-line env vars for `[]String` flags
+- [ ] make releases
 
 ## repos.go
 
@@ -17,16 +21,16 @@ builds a list of repos
 
 builds a list of actions for each repo
 
- * ghpages: skip `pages-build-deployment` since the badges don't work
- * namefilter: regex on name
- * filefilter: regex on filename (from path)
- * status: `[active|all]`
- * actions: a JSON file with a custom-generated (or saved) list of repos/actions
+ * exclude: list of workflows to exclude (default to `codeql,pages-build-deployment`)
+ * inactive: boolean, including inactive 
+ * include: list of workflows to include
+ * 
 
 ## badges.go
 
 adds non-action badges to the list
 
+ * flag to include repos w/o GHAs
  * https://shields.io/badges/git-hub-last-commit-branch
  * https://shields.io/badges/git-hub-issues
  * https://shields.io/badges/git-hub-forks
@@ -34,12 +38,15 @@ adds non-action badges to the list
  * https://badgen.net/github/last-commit/
  * https://badgen.net/github
 
-## render.go
+## template.go
 
-builds page
-
- * output: `[markdown|html|csv|json|demo]`
- * template: custom template file (also load entire template from env for customizing forks)
+ * hyperlink the repo name
+ * better indenting in markdown.tmpl
+ * if only one owner, don't use FullName
+ * header/footer: markdown blobs to include in template
+ * output: html?
+ * template: custom template file
+ * template-string: load entire template from env (for customizing forks with a GHA variable)
 
 Potential go libraries:
 https://github.com/knadh/koanf

@@ -1,6 +1,6 @@
 # Github Actions Dashboard [<img alt="Ghashboard Logo" src="https://ghashboard.marcuse.info/favicon.svg" height="96" align="right" />](https://ghashboard.marcuse.info/)
 
-Automatically generate dashboards with all your Github Actions.
+Automatically generate dashboards with all your Github Action badges.
 
 [more...](https://ghashboard.marcuse.info/)
 

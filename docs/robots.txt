@@ -1,0 +1,14 @@
+---
+title: robots.txt
+layout: none
+noindex: true
+---
+#
+# robots.txt for {{site.title}}
+#
+# all content is indexable
+#
+User-Agent: *
+Allow: /
+
+Sitemap: {{site.production_url}}/sitemap.xml
