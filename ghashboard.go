@@ -33,9 +33,20 @@ func setFlagsFromEnvironment(f *flag.FlagSet) {
 
 var (
 	help    bool
-	owners  []string
 	Verbose bool
-	Output  string
+
+	// repo flags
+	owners []string
+
+	// workflow flags
+	Inactive   bool
+	includes   []string
+	IncludeSet map[string]struct{}
+	excludes   []string
+	ExcludeSet map[string]struct{}
+
+	// output flags
+	Output string
 )
 
 func usage(f *flag.FlagSet) {
@@ -56,8 +67,14 @@ func main() {
 	f := flag.NewFlagSet("config", flag.ContinueOnError)
 	f.BoolVar(&help, "help", false, "Show help")
 	f.MarkHidden("help")
-	f.StringSliceVar(&owners, "owners", []string{}, "Owners")
 	f.BoolVar(&Verbose, "verbose", false, "Verbose messages")
+
+	f.StringSliceVar(&owners, "owners", []string{}, "Owners")
+
+	f.BoolVar(&Inactive, "inactive", false, "Include inactive workflows")
+	f.StringSliceVar(&includes, "include", []string{}, "Actions to include")
+	f.StringSliceVar(&excludes, "exclude", []string{"codeql", "pages-build-deployment"}, "Actions to exclude")
+
 	f.StringVar(&Output, "output", "markdown", "Output format [ markdown | json | csv ]")
 
 	setFlagsFromEnvironment(f)
@@ -78,6 +95,15 @@ func main() {
 		fmt.Printf("ERROR: At least one owner please!\n")
 		usage(f)
 		os.Exit(1)
+	}
+
+	IncludeSet = make(map[string]struct{})
+	for _, include := range includes {
+		IncludeSet[strings.ToLower(include)] = struct{}{}
+	}
+	ExcludeSet = make(map[string]struct{})
+	for _, exclude := range excludes {
+		ExcludeSet[strings.ToLower(exclude)] = struct{}{}
 	}
 
 	client := github.NewClient(nil)

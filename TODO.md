@@ -7,6 +7,15 @@
 - [ ] support multi-line env vars for `[]String` flags
 - [ ] make releases
 
+## Bookmarks
+
+- [pflag](https://pkg.go.dev/github.com/spf13/pflag)
+- [github.Repository](https://pkg.go.dev/github.com/google/go-github/v58@v58.0.0/github#Repository)
+- [github.Workflow](https://pkg.go.dev/github.com/google/go-github/v58@v58.0.0/github#Workflow)
+- Github REST API:
+  [Actions](https://docs.github.com/en/rest/actions?apiVersion=2022-11-28)
+  | [Workflows](https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28)
+
 ## repos.go
 
 builds a list of repos
@@ -21,10 +30,7 @@ builds a list of repos
 
 builds a list of actions for each repo
 
- * exclude: list of workflows to exclude (default to `codeql,pages-build-deployment`)
- * inactive: boolean, including inactive 
- * include: list of workflows to include
- * 
+ * empty flag: include repos w/o workflows in the list (for non-workflow badges)
 
 ## badges.go
 
@@ -55,3 +61,4 @@ https://pkg.go.dev/github.com/google/go-github/v58/github
 ## Maybe
 
  * verify that the badges are on the README page.
+ * handle rate limit [library](https://github.com/gofri/go-github-ratelimit).  Would be useful for anonymous runs, since that rate limit is 60 per *hour* [docs](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28)

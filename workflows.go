@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	github "github.com/google/go-github/v58/github"
 )
@@ -18,7 +19,24 @@ func GetWorkflowsForRepo(client *github.Client, repo *github.Repository) ([]*git
 		if err != nil {
 			return nil, err
 		}
-		allWorkflows = append(allWorkflows, workflows.Workflows...)
+		for _, workflow := range workflows.Workflows {
+			if Inactive && *workflow.State != "active" {
+				continue
+			}
+			if len(IncludeSet) > 0 {
+				_, ok := IncludeSet[strings.ToLower(*workflow.Name)]
+				if !ok {
+					continue
+				}
+			}
+			if len(ExcludeSet) > 0 {
+				_, ok := ExcludeSet[strings.ToLower(*workflow.Name)]
+				if ok {
+					continue
+				}
+			}
+			allWorkflows = append(allWorkflows, workflow)
+		}
 		if resp.NextPage == 0 {
 			break
 		}

@@ -15,6 +15,6 @@ rm -f test.md
 #go run ghashboard.go repos.go workflows.go templates.go test.md
 
 unset OWNERS
-go run *.go --owners=regexplanet --output=markdown -
+go run *.go --owners=fileformat --output=markdown -
 
 
