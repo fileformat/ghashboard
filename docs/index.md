@@ -17,6 +17,8 @@ And, of course, it runs as a Github Action!
 
 ## Examples
 
+[![VectorLogoZone example](images/thumbnails/08_result.png)](images/screenshots/08_result.png "Example w/defaults")
+[![External badges example](images/thumbnails/10_customized_result.png)](images/screenshots/10_customized_result.png "Example w/additional external badges")
 
 ## Usage
 
