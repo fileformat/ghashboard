@@ -120,10 +120,12 @@ func main() {
 	}
 
 	client := github.NewClient(nil)
-	token, tokenOk := os.LookupEnv("GH_TOKEN")
+	token, tokenOk := os.LookupEnv("GHASHBOARD_TOKEN")
 	if tokenOk {
-		fmt.Printf("INFO: Loading GH_TOKEN\n")
+		fmt.Printf("INFO: Loading GHASHBOARD_TOKEN\n")
 		client = client.WithAuthToken(token)
+	} else {
+		fmt.Printf("WARNING: No GHASHBOARD_TOKEN not set: will make anonymous (and rate-limited) Github API calls\n")
 	}
 
 	fmt.Printf("INFO: owners = %v\n", owners)

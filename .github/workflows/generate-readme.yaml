@@ -22,10 +22,16 @@ jobs:
       - name: Run ghashboard
         env:
           GHASHBOARD_OWNERS: ${{ vars.GHASHBOARD_OWNERS }}
+          GHASHBOARD_TOKEN: ${{ secrets.GHASHBOARD_TOKEN }}
         run: |
           if [ -z "$GHASHBOARD_OWNERS" ]; then
             echo "INFO: using default owner ${GITHUB_REPOSITORY_OWNER}.  To override, set GHASHBOARD_OWNERS in your repository variables."
             GHASHBOARD_OWNERS=${GITHUB_REPOSITORY_OWNER}
+          fi
+          if [ -z "$GHASHBOARD_TOKEN" ]; then
+            # NOTE: the default rate limit is so pathetic that calling the API anonymously is not viable
+            echo "INFO: GHASHBOARD_TOKEN is not set, using action's default GITHUB_ACTION.  To override, set GHASHBOARD_TOKEN in your repository secrets."
+            GHASHBOARD_TOKEN=${{ secrets.GITHUB_TOKEN }}
           fi
           go run ./*.go README.md
 
