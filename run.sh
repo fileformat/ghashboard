@@ -14,7 +14,7 @@ fi
 rm -f test.md
 #go run ghashboard.go repos.go workflows.go templates.go test.md
 
-unset OWNERS
+unset GHASHBOARD_OWNERS
 go run *.go --owners=regexplanet,fileformat Dashboard.md
 
 

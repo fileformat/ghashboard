@@ -22,7 +22,7 @@ func setFlagsFromEnvironment(f *flag.FlagSet) {
 	f.VisitAll(func(oneFlag *flag.Flag) {
 		flagName := oneFlag.Name
 		envName := strings.ToUpper(strings.Replace(flagName, "-", "_", -1))
-		value, ok := os.LookupEnv(envName)
+		value, ok := os.LookupEnv("GHASHBOARD_" + envName)
 		if ok {
 			err := f.Set(flagName, value)
 			if err != nil {
