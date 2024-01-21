@@ -21,13 +21,20 @@ type MetaRepo struct {
 func setFlagsFromEnvironment(f *flag.FlagSet) {
 	f.VisitAll(func(oneFlag *flag.Flag) {
 		flagName := oneFlag.Name
-		envName := strings.ToUpper(strings.Replace(flagName, "-", "_", -1))
-		value, ok := os.LookupEnv("GHASHBOARD_" + envName)
-		if ok {
-			err := f.Set(flagName, value)
-			if err != nil {
-				panic(err)
-			}
+		envName := "GHASHBOARD_" + strings.ToUpper(strings.Replace(flagName, "-", "_", -1))
+		value, ok := os.LookupEnv(envName)
+		fmt.Printf("DEBUG: env lookup for %s: '%s' (%s)\n", envName, value, oneFlag.Value.Type())
+		if !ok {
+			// no environment variable set, so nothing to do
+			return
+		}
+		if value == "" && oneFlag.Value.Type() == "bool" {
+			// empty string for a bool, just use the default (i.e. not "true")
+			return
+		}
+		err := f.Set(flagName, value)
+		if err != nil {
+			panic(err)
 		}
 	})
 }

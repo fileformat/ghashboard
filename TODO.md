@@ -1,5 +1,9 @@
 # To Do
 
+- [ ] security notes page
+- [ ] screenshot of warning when enabling Github Actions
+- [ ] customization page
+- [ ] Fix: `pages-build-deployment` *do* have working flags - [Github Bug](https://support.github.com/ticket/personal/0/2545577)
 - [ ] switch template data from array to struct with array as a property, and add more properties (Title, Created, Header)
 - [ ] Golang template function `markdown` to escape markdown
 - [ ] dogfood GHA: build a ghashboard of my stuff
@@ -66,3 +70,13 @@ https://pkg.go.dev/github.com/google/go-github/v58/github
 
  * verify that the badges are on the README page.
  * handle rate limit [library](https://github.com/gofri/go-github-ratelimit).  Would be useful for anonymous runs, since that rate limit is 60 per *hour* [docs](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28)
+
+ * https://github.com/VectorLogoZone/svgzone/workflows/pages-build-deployment/badge.svg
+ * https://github.com/VectorLogoZone/svgzone/actions/workflows/pages/pages-build-deployment/badge.svg (website)
+
+ * https://github.com/VectorLogoZone/svgzone/blob/main/dynamic/pages/pages-build-deployment (api)
+ * https://github.com/VectorLogoZone/svgzone/actions/workflows/pages/pages-build-deployment
+
+ gh cmd line
+       "html_url": "https://github.com/VectorLogoZone/svgzone/blob/main/dynamic/pages/pages-build-deployment",
+      "badge_url": "https://github.com/VectorLogoZone/svgzone/workflows/pages-build-deployment/badge.svg"

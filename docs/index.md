@@ -13,7 +13,7 @@ Have you used Github Actions to automate everything in existance?  I have.
 
 So I built a tool to generate a page full of Github Action badges.  
 
-<!-- And, of course, it runs as a Github Action! -->
+And, of course, it runs as a Github Action!
 
 ## Examples
 
