@@ -3,6 +3,7 @@
 - [ ] switch template data from array to struct with array as a property, and add more properties (Title, Created, Header)
 - [ ] Golang template function `markdown` to escape markdown
 - [ ] dogfood GHA: build a ghashboard of my stuff
+- [ ] fork-is-current GHA
 - [ ] demo GHA: find a couple orgs with a middling number of GHAs for a demo ghashboard
 - [ ] support multi-line env vars for `[]String` flags
 - [ ] make releases

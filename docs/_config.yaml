@@ -5,6 +5,8 @@
 exclude: [ "CNAME", "Gemfile*", "LICENSE.txt", "README.md", "tmp", "*.sh" ]
 include: [".well-known"]
 production_url: https://ghashboard.marcuse.info
+source_url: https://github.com/fileformat/ghashboard
+
 title : Ghashboard
 kramdown:
   input: GFM
