@@ -22,6 +22,10 @@ jobs:
       - name: Run ghashboard
         env:
           GHASHBOARD_OWNERS: ${{ vars.GHASHBOARD_OWNERS }}
+          GHASHBOARD_EMPTY: ${{ vars.GHASHBOARD_EMPTY }}
+          GHASHBOARD_INCLUDE: ${{ vars.GHASHBOARD_INCLUDE }}
+          GHASHBOARD_EXCLUDE: ${{ vars.GHASHBOARD_EXCLUDE }}
+          GHASHBOARD_EXTERNAL: ${{ vars.GHASHBOARD_EXTERNAL }}
           GHASHBOARD_TOKEN: ${{ secrets.GHASHBOARD_TOKEN }}
         run: |
           if [ -z "$GHASHBOARD_OWNERS" ]; then
