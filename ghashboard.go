@@ -13,8 +13,9 @@ import (
 )
 
 type MetaRepo struct {
-	Workflows []*github.Workflow `json:"workflows"`
-	Repo      *github.Repository `json:"repo"`
+	Workflows      []*github.Workflow `json:"workflows"`
+	Repo           *github.Repository `json:"repo"`
+	ExternalBadges []*ExternalBadge   `json:"external"`
 }
 
 func setFlagsFromEnvironment(f *flag.FlagSet) {
@@ -37,6 +38,7 @@ var (
 
 	// repo flags
 	owners []string
+	Empty  bool
 
 	// workflow flags
 	Inactive   bool
@@ -44,6 +46,9 @@ var (
 	IncludeSet map[string]struct{}
 	excludes   []string
 	ExcludeSet map[string]struct{}
+
+	// external badge flags
+	externals []string
 
 	// output flags
 	Output string
@@ -60,6 +65,11 @@ func usage(f *flag.FlagSet) {
 	fmt.Printf("\n")
 	fmt.Printf("      options can also be set via environment variables\n")
 	fmt.Printf("      set GH_TOKEN to use a personal access token and avoid rate limit errors.\n")
+	fmt.Printf("\n")
+	fmt.Printf("    built-in external badges:\n")
+	for key, value := range getBuiltins() {
+		fmt.Printf("      %s - %s\n", key, value)
+	}
 }
 
 func main() {
@@ -70,10 +80,13 @@ func main() {
 	f.BoolVar(&Verbose, "verbose", false, "Verbose messages")
 
 	f.StringSliceVar(&owners, "owners", []string{}, "Owners")
+	f.BoolVar(&Empty, "empty", false, "Include repos with no eligible workflows")
 
 	f.BoolVar(&Inactive, "inactive", false, "Include inactive workflows")
 	f.StringSliceVar(&includes, "include", []string{}, "Actions to include")
 	f.StringSliceVar(&excludes, "exclude", []string{"codeql", "pages-build-deployment"}, "Actions to exclude")
+
+	f.StringSliceVar(&externals, "external", []string{}, "External badges (see below)")
 
 	f.StringVar(&Output, "output", "markdown", "Output format [ markdown | json | csv ]")
 
@@ -137,13 +150,27 @@ func main() {
 			os.Exit(1)
 		}
 		fmt.Printf("INFO: workflows for %s: %d\n", *repo.FullName, len(workflows))
-		if len(workflows) > 0 {
+		if Empty || len(workflows) > 0 {
 			SortWorkflowsCaseInsensitive(workflows)
 			allData = append(allData, &MetaRepo{Workflows: workflows, Repo: repo})
 		}
 	}
 	fmt.Printf("INFO: repos with workflows: %d\n", len(allData))
 	SortReposCaseInsensitive(allData)
+
+	if len(externals) > 0 {
+		fmt.Printf("INFO: loading external badges...\n")
+		for _, metaRepo := range allData {
+			for _, external := range externals {
+				xb, xbErr := GenerateExternalBadge(external, metaRepo.Repo)
+				if xbErr != nil {
+					fmt.Printf("ERROR: unable to expand external badge %s for %s: %v\n", external, *metaRepo.Repo.Name, xbErr)
+					os.Exit(1)
+				}
+				metaRepo.ExternalBadges = append(metaRepo.ExternalBadges, xb)
+			}
+		}
+	}
 
 	filename := f.Arg(0)
 	var writer io.Writer

@@ -1,9 +1,9 @@
 # To Do
 
-- [ ] Something is wrong with the links
+- [ ] switch template data from array to struct with array as a property, and add more properties (Title, Created, Header)
+- [ ] Golang template function `markdown` to escape markdown
 - [ ] dogfood GHA: build a ghashboard of my stuff
 - [ ] demo GHA: find a couple orgs with a middling number of GHAs for a demo ghashboard
-- [ ] switch template data from array to struct with array as a property, and add more properties (Created, Header)
 - [ ] support multi-line env vars for `[]String` flags
 - [ ] make releases
 
@@ -34,15 +34,18 @@ builds a list of actions for each repo
 
 ## badges.go
 
-adds non-action badges to the list
+adds external (non-Github Action) badges to the list
+ * Go Template that takes a Repository
+ * built-in badges (see below): map of string to template
 
- * flag to include repos w/o GHAs
+built-in:
  * https://shields.io/badges/git-hub-last-commit-branch
  * https://shields.io/badges/git-hub-issues
  * https://shields.io/badges/git-hub-forks
  * https://shields.io/badges/git-hub-pull-requests
  * https://badgen.net/github/last-commit/
  * https://badgen.net/github
+ * https://img.shields.io/github/license/VectorLogoZone/vectorlogozone.svg
 
 ## template.go
 
