@@ -1,0 +1,56 @@
+name: generate-readme
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.21
+
+      - name: Run ghashboard
+        env:
+          GHASHBOARD_OWNERS: ${{ vars.GHASHBOARD_OWNERS }}
+        run: |
+          if [ -z "$GHASHBOARD_OWNERS" ]; then
+            echo "INFO: using default owner ${GITHUB_REPOSITORY_OWNER}.  To override, set GHASHBOARD_OWNERS in your repository variables."
+            GHASHBOARD_OWNERS=${GITHUB_REPOSITORY_OWNER}
+          fi
+          go run ./*.go README.md
+
+      - name: Show output for debugging
+        run: cat README.md
+
+      - name: Commit
+        env:
+          GHASHBOARD_COMMITER: ${{ vars.GHASHBOARD_COMMITER }}
+        run: |
+          if [ "${GITHUB_REPOSITORY}" == "fileformat/ghashboard" ]; then
+            echo "INFO: not committing changes to ${GITHUB_REPOSITORY} to avoid fork merge conflicts"
+            exit 0
+          fi
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "INFO: no changes to commit"
+            exit 0
+          fi
+          if [ -z "$GHASHBOARD_COMMITER" ]; then
+            echo "INFO: using default commiter ${GITHUB_ACTOR}.  To override, set GHASHBOARD_COMMITER in your repository variables."
+            GHASHBOARD_COMMITER=${GITHUB_ACTOR}
+          fi
+          git config --global user.name 'ghashboard bot'
+          git config --global user.email "${GHASHBOARD_COMMITER}@users.noreply.github.com"
+
+          git add README.md
+          git commit -m "Generated README.md ghashboard"
+          git push

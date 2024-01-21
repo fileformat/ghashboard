@@ -4,40 +4,40 @@
 
 | Repo | Action |
 | ---- | ------ |
-| [fileformat/awesome-icons](https://github.com/fileformat/awesome-icons) | [![License](https://img.shields.io/github/license/fileformat/awesome-icons.svg)](https://github.com/search?q=repo%3Afileformat%2Fawesome-icons%20path%3A%2Flicense.*&type=code)
-| [fileformat/bitrise-step-appcenter-app-release](https://github.com/fileformat/bitrise-step-appcenter-app-release) | [![License](https://img.shields.io/github/license/fileformat/bitrise-step-appcenter-app-release.svg)](https://github.com/search?q=repo%3Afileformat%2Fbitrise-step-appcenter-app-release%20path%3A%2Flicense.*&type=code)
-| [fileformat/bitrise-steplib](https://github.com/fileformat/bitrise-steplib) | [![License](https://img.shields.io/github/license/fileformat/bitrise-steplib.svg)](https://github.com/search?q=repo%3Afileformat%2Fbitrise-steplib%20path%3A%2Flicense.*&type=code)
-| [fileformat/feed.style](https://github.com/fileformat/feed.style) | [![License](https://img.shields.io/github/license/fileformat/feed.style.svg)](https://github.com/search?q=repo%3Afileformat%2Ffeed.style%20path%3A%2Flicense.*&type=code)
-| [fileformat/frontend-tools](https://github.com/fileformat/frontend-tools) | [![License](https://img.shields.io/github/license/fileformat/frontend-tools.svg)](https://github.com/search?q=repo%3Afileformat%2Ffrontend-tools%20path%3A%2Flicense.*&type=code)
-| [fileformat/handlebars-helpers](https://github.com/fileformat/handlebars-helpers) | [![License](https://img.shields.io/github/license/fileformat/handlebars-helpers.svg)](https://github.com/search?q=repo%3Afileformat%2Fhandlebars-helpers%20path%3A%2Flicense.*&type=code)
-| [fileformat/heatmaptv](https://github.com/fileformat/heatmaptv) | [![License](https://img.shields.io/github/license/fileformat/heatmaptv.svg)](https://github.com/search?q=repo%3Afileformat%2Fheatmaptv%20path%3A%2Flicense.*&type=code)
-| [fileformat/jekyll-bootstrap-blank](https://github.com/fileformat/jekyll-bootstrap-blank) | [![License](https://img.shields.io/github/license/fileformat/jekyll-bootstrap-blank.svg)](https://github.com/search?q=repo%3Afileformat%2Fjekyll-bootstrap-blank%20path%3A%2Flicense.*&type=code)
-| [fileformat/logos-api](https://github.com/fileformat/logos-api) | [![License](https://img.shields.io/github/license/fileformat/logos-api.svg)](https://github.com/search?q=repo%3Afileformat%2Flogos-api%20path%3A%2Flicense.*&type=code)
-| [fileformat/lptools](https://github.com/fileformat/lptools) | [![License](https://img.shields.io/github/license/fileformat/lptools.svg)](https://github.com/search?q=repo%3Afileformat%2Flptools%20path%3A%2Flicense.*&type=code)
-| [fileformat/mvi](https://github.com/fileformat/mvi) | [![License](https://img.shields.io/github/license/fileformat/mvi.svg)](https://github.com/search?q=repo%3Afileformat%2Fmvi%20path%3A%2Flicense.*&type=code)
-| [fileformat/regex-talk](https://github.com/fileformat/regex-talk) | [![License](https://img.shields.io/github/license/fileformat/regex-talk.svg)](https://github.com/search?q=repo%3Afileformat%2Fregex-talk%20path%3A%2Flicense.*&type=code)
-| [fileformat/sandcastlezone](https://github.com/fileformat/sandcastlezone) | [![License](https://img.shields.io/github/license/fileformat/sandcastlezone.svg)](https://github.com/search?q=repo%3Afileformat%2Fsandcastlezone%20path%3A%2Flicense.*&type=code)
-| [fileformat/simpleshare](https://github.com/fileformat/simpleshare) | [![License](https://img.shields.io/github/license/fileformat/simpleshare.svg)](https://github.com/search?q=repo%3Afileformat%2Fsimpleshare%20path%3A%2Flicense.*&type=code) [![deploy](https://github.com/fileformat/simpleshare/workflows/deploy/badge.svg)](https://github.com/fileformat/simpleshare/actions?query=workflow%3Adeploy%20branch%3Amain)
-| [fileformat/sitemap.style](https://github.com/fileformat/sitemap.style) | [![License](https://img.shields.io/github/license/fileformat/sitemap.style.svg)](https://github.com/search?q=repo%3Afileformat%2Fsitemap.style%20path%3A%2Flicense.*&type=code)
-| [fileformat/social-post](https://github.com/fileformat/social-post) | [![License](https://img.shields.io/github/license/fileformat/social-post.svg)](https://github.com/search?q=repo%3Afileformat%2Fsocial-post%20path%3A%2Flicense.*&type=code) [![release](https://github.com/fileformat/social-post/workflows/release/badge.svg)](https://github.com/fileformat/social-post/actions?query=workflow%3Arelease%20branch%3Amain)
-| [fileformat/viper](https://github.com/fileformat/viper) | [![License](https://img.shields.io/github/license/fileformat/viper.svg)](https://github.com/search?q=repo%3Afileformat%2Fviper%20path%3A%2Flicense.*&type=code)
-| [fileformat/worldclocktv-web](https://github.com/fileformat/worldclocktv-web) | [![License](https://img.shields.io/github/license/fileformat/worldclocktv-web.svg)](https://github.com/search?q=repo%3Afileformat%2Fworldclocktv-web%20path%3A%2Flicense.*&type=code) [![build](https://github.com/fileformat/worldclocktv-web/workflows/build/badge.svg)](https://github.com/fileformat/worldclocktv-web/actions?query=workflow%3Abuild%20branch%3Amain)
-| [fileformat/zgrab2](https://github.com/fileformat/zgrab2) | [![License](https://img.shields.io/github/license/fileformat/zgrab2.svg)](https://github.com/search?q=repo%3Afileformat%2Fzgrab2%20path%3A%2Flicense.*&type=code)
-| [regexplanet/regex-zone](https://github.com/regexplanet/regex-zone) | [![License](https://img.shields.io/github/license/regexplanet/regex-zone.svg)](https://github.com/search?q=repo%3Aregexplanet%2Fregex-zone%20path%3A%2Flicense.*&type=code) [![build](https://github.com/regexplanet/regex-zone/workflows/build/badge.svg)](https://github.com/regexplanet/regex-zone/actions?query=workflow%3Abuild%20branch%3Amain)
-| [regexplanet/regexplanet-dotnet](https://github.com/regexplanet/regexplanet-dotnet) | [![License](https://img.shields.io/github/license/regexplanet/regexplanet-dotnet.svg)](https://github.com/search?q=repo%3Aregexplanet%2Fregexplanet-dotnet%20path%3A%2Flicense.*&type=code)
-| [regexplanet/regexplanet-golang](https://github.com/regexplanet/regexplanet-golang) | [![License](https://img.shields.io/github/license/regexplanet/regexplanet-golang.svg)](https://github.com/search?q=repo%3Aregexplanet%2Fregexplanet-golang%20path%3A%2Flicense.*&type=code) [![build](https://github.com/regexplanet/regexplanet-golang/workflows/build/badge.svg)](https://github.com/regexplanet/regexplanet-golang/actions?query=workflow%3Abuild%20branch%3Amain)
-| [regexplanet/regexplanet-haskell](https://github.com/regexplanet/regexplanet-haskell) | [![License](https://img.shields.io/github/license/regexplanet/regexplanet-haskell.svg)](https://github.com/search?q=repo%3Aregexplanet%2Fregexplanet-haskell%20path%3A%2Flicense.*&type=code)
-| [regexplanet/regexplanet-java](https://github.com/regexplanet/regexplanet-java) | [![License](https://img.shields.io/github/license/regexplanet/regexplanet-java.svg)](https://github.com/search?q=repo%3Aregexplanet%2Fregexplanet-java%20path%3A%2Flicense.*&type=code)
-| [regexplanet/regexplanet-js](https://github.com/regexplanet/regexplanet-js) | [![License](https://img.shields.io/github/license/regexplanet/regexplanet-js.svg)](https://github.com/search?q=repo%3Aregexplanet%2Fregexplanet-js%20path%3A%2Flicense.*&type=code) [![build](https://github.com/regexplanet/regexplanet-js/workflows/build/badge.svg)](https://github.com/regexplanet/regexplanet-js/actions?query=workflow%3Abuild%20branch%3Amain)
-| [regexplanet/regexplanet-perl](https://github.com/regexplanet/regexplanet-perl) | [![License](https://img.shields.io/github/license/regexplanet/regexplanet-perl.svg)](https://github.com/search?q=repo%3Aregexplanet%2Fregexplanet-perl%20path%3A%2Flicense.*&type=code)
-| [regexplanet/regexplanet-perl-cgi](https://github.com/regexplanet/regexplanet-perl-cgi) | [![License](https://img.shields.io/github/license/regexplanet/regexplanet-perl-cgi.svg)](https://github.com/search?q=repo%3Aregexplanet%2Fregexplanet-perl-cgi%20path%3A%2Flicense.*&type=code)
-| [regexplanet/regexplanet-php](https://github.com/regexplanet/regexplanet-php) | [![License](https://img.shields.io/github/license/regexplanet/regexplanet-php.svg)](https://github.com/search?q=repo%3Aregexplanet%2Fregexplanet-php%20path%3A%2Flicense.*&type=code)
-| [regexplanet/regexplanet-postgresql](https://github.com/regexplanet/regexplanet-postgresql) | [![License](https://img.shields.io/github/license/regexplanet/regexplanet-postgresql.svg)](https://github.com/search?q=repo%3Aregexplanet%2Fregexplanet-postgresql%20path%3A%2Flicense.*&type=code)
-| [regexplanet/regexplanet-python](https://github.com/regexplanet/regexplanet-python) | [![License](https://img.shields.io/github/license/regexplanet/regexplanet-python.svg)](https://github.com/search?q=repo%3Aregexplanet%2Fregexplanet-python%20path%3A%2Flicense.*&type=code)
-| [regexplanet/regexplanet-ruby](https://github.com/regexplanet/regexplanet-ruby) | [![License](https://img.shields.io/github/license/regexplanet/regexplanet-ruby.svg)](https://github.com/search?q=repo%3Aregexplanet%2Fregexplanet-ruby%20path%3A%2Flicense.*&type=code) [![Build and deploy to Google Cloud Run](https://github.com/regexplanet/regexplanet-ruby/workflows/Build%20and%20deploy%20to%20Google%20Cloud%20Run/badge.svg)](https://github.com/regexplanet/regexplanet-ruby/actions?query=workflow%3ABuild+and+deploy+to+Google+Cloud+Run%20branch%3Amain)
-| [regexplanet/regexplanet-tcl](https://github.com/regexplanet/regexplanet-tcl) | [![License](https://img.shields.io/github/license/regexplanet/regexplanet-tcl.svg)](https://github.com/search?q=repo%3Aregexplanet%2Fregexplanet-tcl%20path%3A%2Flicense.*&type=code)
-| [regexplanet/regexplanet-translations](https://github.com/regexplanet/regexplanet-translations) | [![License](https://img.shields.io/github/license/regexplanet/regexplanet-translations.svg)](https://github.com/search?q=repo%3Aregexplanet%2Fregexplanet-translations%20path%3A%2Flicense.*&type=code)
-| [regexplanet/regexplanet-xregexp](https://github.com/regexplanet/regexplanet-xregexp) | [![License](https://img.shields.io/github/license/regexplanet/regexplanet-xregexp.svg)](https://github.com/search?q=repo%3Aregexplanet%2Fregexplanet-xregexp%20path%3A%2Flicense.*&type=code) [![build](https://github.com/regexplanet/regexplanet-xregexp/workflows/build/badge.svg)](https://github.com/regexplanet/regexplanet-xregexp/actions?query=workflow%3Abuild%20branch%3Amain)
+| [fileformat/awesome-icons](https://github.com/fileformat/awesome-icons) |
+| [fileformat/bitrise-step-appcenter-app-release](https://github.com/fileformat/bitrise-step-appcenter-app-release) |
+| [fileformat/bitrise-steplib](https://github.com/fileformat/bitrise-steplib) |
+| [fileformat/feed.style](https://github.com/fileformat/feed.style) |
+| [fileformat/frontend-tools](https://github.com/fileformat/frontend-tools) |
+| [fileformat/handlebars-helpers](https://github.com/fileformat/handlebars-helpers) |
+| [fileformat/heatmaptv](https://github.com/fileformat/heatmaptv) |
+| [fileformat/jekyll-bootstrap-blank](https://github.com/fileformat/jekyll-bootstrap-blank) |
+| [fileformat/logos-api](https://github.com/fileformat/logos-api) |
+| [fileformat/lptools](https://github.com/fileformat/lptools) |
+| [fileformat/mvi](https://github.com/fileformat/mvi) |
+| [fileformat/regex-talk](https://github.com/fileformat/regex-talk) |
+| [fileformat/sandcastlezone](https://github.com/fileformat/sandcastlezone) |
+| [fileformat/simpleshare](https://github.com/fileformat/simpleshare) |
+| [fileformat/sitemap.style](https://github.com/fileformat/sitemap.style) |
+| [fileformat/social-post](https://github.com/fileformat/social-post) |
+| [fileformat/viper](https://github.com/fileformat/viper) |
+| [fileformat/worldclocktv-web](https://github.com/fileformat/worldclocktv-web) |
+| [fileformat/zgrab2](https://github.com/fileformat/zgrab2) |
+| [regexplanet/regex-zone](https://github.com/regexplanet/regex-zone) |
+| [regexplanet/regexplanet-dotnet](https://github.com/regexplanet/regexplanet-dotnet) |
+| [regexplanet/regexplanet-golang](https://github.com/regexplanet/regexplanet-golang) |
+| [regexplanet/regexplanet-haskell](https://github.com/regexplanet/regexplanet-haskell) |
+| [regexplanet/regexplanet-java](https://github.com/regexplanet/regexplanet-java) |
+| [regexplanet/regexplanet-js](https://github.com/regexplanet/regexplanet-js) |
+| [regexplanet/regexplanet-perl](https://github.com/regexplanet/regexplanet-perl) |
+| [regexplanet/regexplanet-perl-cgi](https://github.com/regexplanet/regexplanet-perl-cgi) |
+| [regexplanet/regexplanet-php](https://github.com/regexplanet/regexplanet-php) |
+| [regexplanet/regexplanet-postgresql](https://github.com/regexplanet/regexplanet-postgresql) |
+| [regexplanet/regexplanet-python](https://github.com/regexplanet/regexplanet-python) |
+| [regexplanet/regexplanet-ruby](https://github.com/regexplanet/regexplanet-ruby) |
+| [regexplanet/regexplanet-tcl](https://github.com/regexplanet/regexplanet-tcl) |
+| [regexplanet/regexplanet-translations](https://github.com/regexplanet/regexplanet-translations) |
+| [regexplanet/regexplanet-xregexp](https://github.com/regexplanet/regexplanet-xregexp) |
 Repos: 34
 
 <small>Built with <a href="https://github.com/fileformat/ghashboard"><img src="https://ghashboard.marcuse.info/favicon.svg" alt="Ghashboard logo" style="height:1em;" />ghashboard</a>!</small>
