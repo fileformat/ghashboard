@@ -23,7 +23,7 @@ And, of course, it runs as a Github Action!
 ## Usage
 
 1. [Fork this repo]({{site.source_url}}/fork).  The rest of the steps are in your fork.
-2. Run the `generate` Github Action
+2. Run the `generate-readme` Github Action
 3. Go to the `README.md` of your fork and admire your brand-new ghashboard!
 4. Tweak the forked repo's Github Action variables to get it looking just the way you want!
 
