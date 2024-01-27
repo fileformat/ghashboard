@@ -29,10 +29,6 @@
 
 builds a list of repos
 
- * public: boolean 
- * private: boolean
- * forks: boolean
- * archived: boolean
  * repos: a list of repos (or @filename), bypasses all flags
 
 ## workflows.go
@@ -40,6 +36,7 @@ builds a list of repos
 builds a list of actions for each repo
 
  * empty flag: include repos w/o workflows in the list (for non-workflow badges)
+ * include/exclude: support for regexes
 
 ## badges.go
 

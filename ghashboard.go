@@ -44,8 +44,12 @@ var (
 	Verbose bool
 
 	// repo flags
-	owners []string
-	Empty  bool
+	owners   []string
+	Empty    bool
+	Private  bool
+	Public   bool
+	Forks    bool
+	Archived bool
 
 	// workflow flags
 	Inactive   bool
@@ -88,6 +92,10 @@ func main() {
 
 	f.StringSliceVar(&owners, "owners", []string{}, "Owners")
 	f.BoolVar(&Empty, "empty", false, "Include repos with no eligible workflows")
+	f.BoolVar(&Private, "private", false, "Include private repos")
+	f.BoolVar(&Public, "public", true, "Include public repos")
+	f.BoolVar(&Forks, "forks", false, "Include forks")
+	f.BoolVar(&Archived, "archived", false, "Include archived repos")
 
 	f.BoolVar(&Inactive, "inactive", false, "Include inactive workflows")
 	f.StringSliceVar(&includes, "include", []string{}, "Actions to include")
@@ -138,15 +146,13 @@ func main() {
 	fmt.Printf("INFO: owners = %v\n", owners)
 
 	var allRepos []*github.Repository
-	for _, owner := range owners {
-		fmt.Printf("INFO: loading repos for %s...\n", owner)
-		repos, err := GetReposForOwner(client, owner)
+	if owners != nil && len(owners) > 0 {
+		ownerRepos, err := GetRepos(client, owners)
 		if err != nil {
 			fmt.Printf("Error: %v\n", err)
 			os.Exit(1)
 		}
-		fmt.Printf("INFO repos for %s: %d\n", owner, len(repos))
-		allRepos = append(allRepos, repos...)
+		allRepos = append(allRepos, ownerRepos...)
 	}
 	fmt.Printf("INFO: total repos: %d\n", len(allRepos))
 
