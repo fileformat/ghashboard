@@ -1,6 +1,12 @@
 # To Do
 
-- [ ] customization page
+- [ ] demo repo
+- [ ] better README
+- [ ] action.yaml
+- [ ] output file extension based on format
+- [ ] args: title, header, footer
+- [ ] new arg: template, (and @filename)
+- [ ] repos arg: support for @filename
 - [ ] security notes page
       - screenshot of warning when enabling Github Actions
 - [ ] instructions w/screenshots
@@ -72,7 +78,7 @@ https://pkg.go.dev/github.com/google/go-github/v58/github
  * verify that the badges are on the README page.
  * handle rate limit [library](https://github.com/gofri/go-github-ratelimit).  Would be useful for anonymous runs, since that rate limit is 60 per *hour* [docs](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28)
 
- * https://github.com/VectorLogoZone/svgzone/workflows/pages-build-deployment/badge.svg
+ * https://gith ub.com/VectorLogoZone/svgzone/workflows/pages-build-deployment/badge.svg
  * https://github.com/VectorLogoZone/svgzone/actions/workflows/pages/pages-build-deployment/badge.svg (website)
 
  * https://github.com/VectorLogoZone/svgzone/blob/main/dynamic/pages/pages-build-deployment (api)

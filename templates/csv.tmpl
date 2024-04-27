@@ -1,10 +1,10 @@
 Repo,Name,Image,Link
 {{- range . -}}
     {{- $repo := .Repo.Name -}}
-    {{- range .Workflows }} 
+    {{- range .Workflows }}
 {{ $repo}}, {{.Name}}, {{ .BadgeURL }}, {{ .HTMLURL }}
     {{- end -}}
-    {{- range .ExternalBadges }} 
+    {{- range .ExternalBadges }}
 {{ $repo}}, {{.Name}}, {{ .Image }}, {{ .Link }}
     {{- end -}}
 {{ end }}

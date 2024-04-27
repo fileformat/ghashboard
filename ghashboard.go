@@ -2,14 +2,13 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
+	"log/slog"
 	"os"
-	"path"
 	"strings"
 
 	github "github.com/google/go-github/v58/github"
-	flag "github.com/spf13/pflag"
+	"github.com/spf13/viper"
 )
 
 type MetaRepo struct {
@@ -18,168 +17,101 @@ type MetaRepo struct {
 	ExternalBadges []*ExternalBadge   `json:"external"`
 }
 
-func setFlagsFromEnvironment(f *flag.FlagSet) {
-	f.VisitAll(func(oneFlag *flag.Flag) {
-		flagName := oneFlag.Name
-		envName := "GHASHBOARD_" + strings.ToUpper(strings.Replace(flagName, "-", "_", -1))
-		value, ok := os.LookupEnv(envName)
-		fmt.Printf("DEBUG: env lookup for %s: '%s' (%s)\n", envName, value, oneFlag.Value.Type())
-		if !ok {
-			// no environment variable set, so nothing to do
-			return
-		}
-		if value == "" && oneFlag.Value.Type() == "bool" {
-			// empty string for a bool, just use the default (i.e. not "true")
-			return
-		}
-		err := f.Set(flagName, value)
-		if err != nil {
-			panic(err)
-		}
-	})
-}
-
 var (
-	help    bool
-	Verbose bool
-
-	// repo flags
-	owners   []string
-	Empty    bool
-	Private  bool
-	Public   bool
-	Forks    bool
-	Archived bool
 
 	// workflow flags
-	Inactive   bool
-	includes   []string
 	IncludeSet map[string]struct{}
-	excludes   []string
 	ExcludeSet map[string]struct{}
 
 	// external badge flags
-	externals []string
-
-	// output flags
-	Output string
+	Externals []string
 )
-
-func usage(f *flag.FlagSet) {
-	fmt.Printf("Usage: %s [options] [file]\n", path.Base(os.Args[0]))
-	fmt.Printf("\n")
-	fmt.Printf("Create a Github Actions dashboard full of badges\n")
-	fmt.Printf("\n")
-	fmt.Printf("%s\n", f.FlagUsages())
-	fmt.Printf("\n")
-	fmt.Printf("      file: output file (default: stdout)\n")
-	fmt.Printf("\n")
-	fmt.Printf("      options can also be set via environment variables\n")
-	fmt.Printf("      set GH_TOKEN to use a personal access token and avoid rate limit errors.\n")
-	fmt.Printf("\n")
-	fmt.Printf("    built-in external badges:\n")
-	for key, value := range getBuiltins() {
-		fmt.Printf("      %s - %s\n", key, value)
-	}
-}
 
 func main() {
 
-	f := flag.NewFlagSet("config", flag.ContinueOnError)
-	f.BoolVar(&help, "help", false, "Show help")
-	f.MarkHidden("help")
-	f.BoolVar(&Verbose, "verbose", false, "Verbose messages")
+	initConfig(os.Args[1:])
+	initLogger()
 
-	f.StringSliceVar(&owners, "owners", []string{}, "Owners")
-	f.BoolVar(&Empty, "empty", false, "Include repos with no eligible workflows")
-	f.BoolVar(&Private, "private", false, "Include private repos")
-	f.BoolVar(&Public, "public", true, "Include public repos")
-	f.BoolVar(&Forks, "forks", false, "Include forks")
-	f.BoolVar(&Archived, "archived", false, "Include archived repos")
+	repos := viper_GetStringSlice("repos")
+	owners := viper_GetStringSlice("owners")
 
-	f.BoolVar(&Inactive, "inactive", false, "Include inactive workflows")
-	f.StringSliceVar(&includes, "include", []string{}, "Actions to include")
-	f.StringSliceVar(&excludes, "exclude", []string{"codeql", "pages-build-deployment"}, "Actions to exclude")
-
-	f.StringSliceVar(&externals, "external", []string{}, "External badges (see below)")
-
-	f.StringVar(&Output, "output", "markdown", "Output format [ markdown | json | csv ]")
-
-	setFlagsFromEnvironment(f)
-
-	f.Parse(os.Args[1:])
-	if help {
-		usage(f)
-		os.Exit(0)
-	}
-
-	if len(f.Args()) > 1 {
-		fmt.Printf("ERROR: Only one output file please!\n")
-		usage(f)
-		os.Exit(1)
-	}
-
-	if len(owners) == 0 {
-		fmt.Printf("ERROR: At least one owner please!\n")
-		usage(f)
-		os.Exit(1)
-	}
-
+	includes := viper_GetStringSlice("include")
 	IncludeSet = make(map[string]struct{})
 	for _, include := range includes {
 		IncludeSet[strings.ToLower(include)] = struct{}{}
 	}
+
+	excludes := viper_GetStringSlice("exclude")
 	ExcludeSet = make(map[string]struct{})
 	for _, exclude := range excludes {
 		ExcludeSet[strings.ToLower(exclude)] = struct{}{}
 	}
 
 	client := github.NewClient(nil)
-	token, tokenOk := os.LookupEnv("GHASHBOARD_TOKEN")
-	if tokenOk {
-		fmt.Printf("INFO: Loading GHASHBOARD_TOKEN\n")
+	token := viper.GetString("github-token")
+	if token != "" {
+		slog.Info("using a token to make authorized requests")
 		client = client.WithAuthToken(token)
 	} else {
-		fmt.Printf("WARNING: No GHASHBOARD_TOKEN not set: will make anonymous (and rate-limited) Github API calls\n")
+		slog.Warn("token not set: will make anonymous (and rate-limited) Github API calls")
 	}
 
-	fmt.Printf("INFO: owners = %v\n", owners)
+	slog.Debug("owners", "owners", owners, "repos", repos)
 
 	var allRepos []*github.Repository
-	if owners != nil && len(owners) > 0 {
+
+	if len(repos) > 0 {
+		for _, repo := range repos {
+			theRepo, err := GetRepo(client, repo)
+			if err != nil {
+				slog.Error("unable to get repo", "error", err, "repo", repo)
+				os.Exit(1)
+			}
+			allRepos = append(allRepos, theRepo)
+		}
+	}
+
+	if len(owners) > 0 {
 		ownerRepos, err := GetRepos(client, owners)
 		if err != nil {
-			fmt.Printf("Error: %v\n", err)
+			slog.Error("unable to get repos for owners", "error", err, "owners", owners)
 			os.Exit(1)
 		}
 		allRepos = append(allRepos, ownerRepos...)
 	}
-	fmt.Printf("INFO: total repos: %d\n", len(allRepos))
+	if len(allRepos) == 0 {
+		slog.Error("no repos found", "repos", repos, "owners", owners)
+		os.Exit(1)
+	}
+
+	slog.Debug("repos found", "count", len(allRepos))
 
 	var allData []*MetaRepo
+	empty := viper.GetBool("empty")
 	for _, repo := range allRepos {
-		fmt.Printf("INFO: loading workflows for %s...\n", *repo.FullName)
+		slog.Info("loading workflows", "repo", *repo.FullName)
 		workflows, err := GetWorkflowsForRepo(client, repo)
 		if err != nil {
-			fmt.Printf("Error: %v\n", err)
+			slog.Error("unable to load workflows", "error", err, "repo", *repo.FullName)
 			os.Exit(1)
 		}
-		fmt.Printf("INFO: workflows for %s: %d\n", *repo.FullName, len(workflows))
-		if Empty || len(workflows) > 0 {
+		slog.Info("workflows found", "repo", *repo.FullName, "count", len(workflows))
+		if empty || len(workflows) > 0 {
 			SortWorkflowsCaseInsensitive(workflows)
 			allData = append(allData, &MetaRepo{Workflows: workflows, Repo: repo})
 		}
 	}
-	fmt.Printf("INFO: repos with workflows: %d\n", len(allData))
-	SortReposCaseInsensitive(allData)
+	slog.Info("repos with workflows", "count", len(allData))
+	//SortReposCaseInsensitive(allData)
 
+	externals := viper_GetStringSlice("externals")
 	if len(externals) > 0 {
-		fmt.Printf("INFO: loading external badges...\n")
+		slog.Info("loading external badges", "count", len(externals))
 		for _, metaRepo := range allData {
 			for _, external := range externals {
 				xb, xbErr := GenerateExternalBadge(external, metaRepo.Repo)
 				if xbErr != nil {
-					fmt.Printf("ERROR: unable to expand external badge %s for %s: %v\n", external, *metaRepo.Repo.Name, xbErr)
+					slog.Error("unable to expand external badge", "error", xbErr, "external", external, "repo", *metaRepo.Repo.Name)
 					os.Exit(1)
 				}
 				metaRepo.ExternalBadges = append(metaRepo.ExternalBadges, xb)
@@ -187,39 +119,42 @@ func main() {
 		}
 	}
 
-	filename := f.Arg(0)
+	filename := viper.GetString("file")
 	var writer io.Writer
 	if filename == "" || filename == "-" {
-		fmt.Printf("INFO: writing to stdout\n")
+		slog.Info("writing to stdout")
 		writer = os.Stdout
 	} else {
-		fmt.Printf("INFO: writing to %s\n", filename)
+		slog.Info("writing to file", "filename", filename)
 		file, openErr := os.Create(filename)
 		if openErr != nil {
-			fmt.Printf("Error: %v\n", openErr)
+			slog.Error("unable to open file", "error", openErr, "filename", filename)
 			os.Exit(1)
 		}
 		defer file.Close()
 		writer = file
 	}
 
-	if Output == "json" {
+	format := viper.GetString("format")
+	if format == "json" {
 		jsonStr, jsonErr := json.Marshal(allData)
 		if jsonErr != nil {
-			fmt.Printf("Error: %v\n", jsonErr)
+			slog.Error("unable to marshal json", "error", jsonErr)
 			os.Exit(1)
 		}
 		writer.Write(jsonStr)
 	} else {
-		tmpl, tmplErr := GetStandardTemplate(Output)
+		tmpl, tmplErr := GetStandardTemplate(format)
 		if tmplErr != nil {
-			fmt.Printf("Error: %v\n", tmplErr)
+			slog.Error("unable to open template", "error", tmplErr, "format", format)
 			os.Exit(1)
 		}
 		mergeErr := tmpl.Execute(writer, allData)
 		if mergeErr != nil {
-			fmt.Printf("Error: %v\n", mergeErr)
+			slog.Error("unable to merge template", "error", mergeErr, "format", format)
 			os.Exit(1)
 		}
 	}
+
+	slog.Info("done")
 }

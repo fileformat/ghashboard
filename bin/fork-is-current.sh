@@ -41,5 +41,5 @@ else
     # gh: No commit found for SHA: ... (HTTP 422)
     #
     FORKED_LATEST=$(gh api repos/${GITHUB_REPOSITORY}/commits/${UPSTREAM_LATEST})
-    echo "INFO: commit found in current repo!"
+    echo "INFO: commit found in current repo (${GITHUB_REPOSITORY})!"
 fi

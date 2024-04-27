@@ -2,16 +2,18 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"log/slog"
 	"strings"
 
 	github "github.com/google/go-github/v58/github"
+	"github.com/spf13/viper"
 )
 
 func GetWorkflowsForRepo(client *github.Client, repo *github.Repository) ([]*github.Workflow, error) {
 
 	opt := &github.ListOptions{PerPage: 50}
 	ctx := context.Background()
+	inactive := viper.GetBool("inactive")
 
 	var allWorkflows []*github.Workflow
 	for {
@@ -20,7 +22,7 @@ func GetWorkflowsForRepo(client *github.Client, repo *github.Repository) ([]*git
 			return nil, err
 		}
 		for _, workflow := range workflows.Workflows {
-			if Inactive && *workflow.State != "active" {
+			if inactive && *workflow.State != "active" {
 				continue
 			}
 			if len(IncludeSet) > 0 {
@@ -40,7 +42,7 @@ func GetWorkflowsForRepo(client *github.Client, repo *github.Repository) ([]*git
 		if resp.NextPage == 0 {
 			break
 		}
-		fmt.Printf("Paging...\n")
+		slog.Debug("paging for workflows", "repo", *repo.FullName, "page", resp.NextPage)
 		opt.Page = resp.NextPage
 	}
 	return allWorkflows, nil

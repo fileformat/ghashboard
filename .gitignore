@@ -12,11 +12,13 @@ foo
 .jekyll-metadata
 *.log
 node_modules/
+*.out
 *.pyc
 .sass-cache/
 _site/
 *.swp
 test*
+tmp*
 *.tmp
 _tmp/
 tmp/
