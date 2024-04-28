@@ -37,6 +37,8 @@ func initConfig(args []string) {
 	help := f.Bool("help", false, "Show help")
 	f.MarkHidden("help")
 
+	versionFlag := f.Bool("version", false, "Show version information")
+
 	f.String("log-level", "warn", "Log level [ debug | info | warn | error ]")
 	viper.BindPFlag("log-level", f.Lookup("log-level"))
 	viper.BindEnv("log-level", "LOG_LEVEL", "INPUT_LOG_LEVEL")
@@ -106,6 +108,11 @@ func initConfig(args []string) {
 	viper.BindEnv("file", "FILE", "INPUT_FILE")
 
 	f.Parse(args)
+
+	if *versionFlag {
+		fmt.Printf("ghashboard v%s (%s built on %s by %s)\n", version, commit, date, builtBy)
+		os.Exit(0)
+	}
 
 	if *help {
 		usage(f)

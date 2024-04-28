@@ -18,6 +18,11 @@ type MetaRepo struct {
 }
 
 var (
+	// version info
+	version string
+	commit  string
+	date    string
+	builtBy string
 
 	// workflow flags
 	IncludeSet map[string]struct{}
