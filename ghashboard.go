@@ -107,7 +107,7 @@ func main() {
 		}
 	}
 	slog.Info("repos with workflows", "count", len(allData))
-	//SortReposCaseInsensitive(allData)
+	SortReposCaseInsensitive(allData)
 
 	externals := viper_GetStringSlice("externals")
 	if len(externals) > 0 {

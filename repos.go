@@ -81,6 +81,10 @@ func getPublicReposForOwner(client *github.Client, owner string) ([]*github.Repo
 			if !strings.EqualFold(*repo.Owner.Login, owner) {
 				continue
 			}
+			// needed since getting a user's repos will include private repos
+			if *repo.Private {
+				continue
+			}
 			allRepos = append(allRepos, repo)
 		}
 

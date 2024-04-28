@@ -1,4 +1,9 @@
-# Github Actions Dashboard (aka ghashboard) <img alt="Ghashboard Logo" src="docs/favicon.svg" height="96" align="right"/>
+# Github Actions Dashboard (aka ghashboard) [<img alt="Ghashboard Logo" src="docs/favicon.svg" height="96" align="right"/>](https://ghashboard.marcuse.info/)
+
+[![build](https://github.com/fileformat/ghashboard/actions/workflows/build.yaml/badge.svg)](https://github.com/fileformat/ghashboard/actions/workflows/build.yaml)
+[![release](https://github.com/fileformat/ghashboard/actions/workflows/release.yaml/badge.svg)](https://github.com/fileformat/ghashboard/actions/workflows/release.yaml)
+[![Version](https://img.shields.io/github/v/tag/fileformat/ghashboard?sort=semver&style=plastic&label=Version&labelColor=black&color=blue)](https://github.com/fileformat/ghashboard/releases)
+
 
 A tool for making dashboard pages with all the badges from your Github Actions.
 
