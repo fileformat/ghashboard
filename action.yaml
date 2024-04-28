@@ -1,0 +1,68 @@
+name:         ghashboard
+description:  "Builds dashboard pages with your Github Action badges"
+author:       fileformat
+
+branding:
+  icon:   activity
+  color:  blue
+
+inputs:
+
+  owners:
+    description:  "list of owners"
+    required:     false
+  repos:
+    description:  "list of repos"
+    required:     false
+  archived:
+    description:  "include archived repos?"
+    required:     false
+    default:      false
+  empty:
+    description:  "include repos with no workflows"
+    required:     false
+    default:      false
+  exclude:
+    description:  "workflows to exclude"
+    required:     false
+  externals:
+    description:  "external badges to include"
+    required:     false
+  file:
+    description:  "file to create (or use `-` for stdout)"
+    required:     false
+    default:      "dashboard.md"
+  forks:
+    description:  "include forked repos?"
+    required:     false
+    default:      false
+  format:
+    description:  "output format [ markdown | csv ]"
+    required:     false
+    default:      "markdown"
+  inactive:
+    description:  "include inactive workflows?"
+    required:     false
+    default:      false
+  include:
+    description:  "workflows to include"
+    required:     false
+  log-level:
+    description:  "log level [ debug | info | warn | error ]"
+    required:     false
+    default:      "info"
+  private:
+    description:  "include private repos?"
+    required:     false
+    default:      true
+  public:
+    description:  "include public repos?"
+    required:     false
+    default:      true
+  token:
+    description:  "Github token"
+    required:     false
+
+runs:
+  using: docker
+  image: docker://ghcr.io/fileformat/ghashboard:latest

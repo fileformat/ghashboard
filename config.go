@@ -103,7 +103,7 @@ func initConfig(args []string) {
 	viper.BindPFlag("format", f.Lookup("format"))
 	viper.BindEnv("format", "FORMAT", "INPUT_FORMAT")
 
-	f.String("file", "README.md", "File name (or - for stdout)")
+	f.String("file", "dashboard.md", "File name (or - for stdout)")
 	viper.BindPFlag("file", f.Lookup("file"))
 	viper.BindEnv("file", "FILE", "INPUT_FILE")
 
