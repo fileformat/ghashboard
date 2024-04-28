@@ -7,13 +7,43 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-if [ -f ".env" ]; then
-  export $(cat .env)
+echo "INFO: starting at $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+
+if [ ! -d "./dist" ]; then
+    echo "INFO: creating dist directory"
+    mkdir ./dist
 fi
 
-rm -f test.md
-#go run ghashboard.go repos.go workflows.go templates.go test.md
+if [ -f "./dist/ghashboard" ]; then
+    echo "INFO: removing old build of ghashboard"
+    rm ./dist/ghashboard
+fi
 
-go run *.go Dashboard.md
+COMMIT=$(git rev-parse HEAD)-local
+LASTMOD=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+VERSION=local
+BUILTBY=run.sh
 
+echo "INFO: building new ghashboard"
+go build \
+    -ldflags "-X main.commit=$COMMIT -X main.date=$LASTMOD -X main.version=$VERSION -X main.builtBy=$BUILTBY -extldflags '-static'" \
+    -o ./dist/ghashboard \
+    ./*.go
 
+if [ ! -f "./dist/ghashboard" ]; then
+    echo "ERROR: failed to build ghashboard"
+    exit 1
+fi
+
+echo "INFO: running $(./dist/ghashboard --version)"
+
+if [ -f ".env" ]; then
+    echo "INFO: loading environment variables from .env"
+    export $(grep -v '^#' .env)
+fi
+
+echo "INFO: running ghashboard with arguments: $@"
+./dist/ghashboard "$@"
+
+echo "INFO: complete at $(date -u +%Y-%m-%dT%H:%M:%SZ)"

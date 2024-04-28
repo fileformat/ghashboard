@@ -1,15 +1,18 @@
 package main
 
 import (
+	"embed"
 	"fmt"
-	"os"
 	"text/template"
 )
+
+//go:embed templates
+var templateFS embed.FS
 
 func GetStandardTemplate(templateName string) (*template.Template, error) {
 
 	fileName := fmt.Sprintf("templates/%s.tmpl", templateName)
-	rawTmpl, readErr := os.ReadFile(fileName)
+	rawTmpl, readErr := templateFS.ReadFile(fileName)
 	if readErr != nil {
 		return nil, readErr
 	}
