@@ -22,7 +22,7 @@ func GetWorkflowsForRepo(client *github.Client, repo *github.Repository) ([]*git
 			return nil, err
 		}
 		for _, workflow := range workflows.Workflows {
-			if inactive && *workflow.State != "active" {
+			if !inactive && *workflow.State != "active" {
 				continue
 			}
 			if len(IncludeSet) > 0 {
