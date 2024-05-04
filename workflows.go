@@ -13,7 +13,7 @@ func GetWorkflowsForRepo(client *github.Client, repo *github.Repository) ([]*git
 
 	opt := &github.ListOptions{PerPage: 50}
 	ctx := context.Background()
-	inactive := viper.GetBool("inactive")
+	includeInactive := viper.GetBool("inactive")
 
 	var allWorkflows []*github.Workflow
 	for {
@@ -22,7 +22,7 @@ func GetWorkflowsForRepo(client *github.Client, repo *github.Repository) ([]*git
 			return nil, err
 		}
 		for _, workflow := range workflows.Workflows {
-			if !inactive && *workflow.State != "active" {
+			if !includeInactive && *workflow.State != "active" {
 				continue
 			}
 			if len(IncludeSet) > 0 {
