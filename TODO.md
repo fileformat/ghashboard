@@ -4,6 +4,8 @@
 - [ ] better README
 - [ ] action.yaml
 - [ ] output file extension based on format
+- [ ] custom external links (and link definitions from a yaml file)
+- [ ] json output (separate flag/file)
 - [ ] progress indicators (if output!=stdout && stdout == tty)
 - [ ] args: title, header, footer
 - [ ] new arg: template, (and @filename)

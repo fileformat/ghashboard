@@ -30,8 +30,7 @@ func GetWorkflowsForRepo(client *github.Client, repo *github.Repository) ([]*git
 				if !ok {
 					continue
 				}
-			}
-			if len(ExcludeSet) > 0 {
+			} else if len(ExcludeSet) > 0 {
 				_, ok := ExcludeSet[strings.ToLower(*workflow.Name)]
 				if ok {
 					continue
