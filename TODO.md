@@ -4,6 +4,7 @@
 - [ ] better README
 - [ ] action.yaml
 - [ ] output file extension based on format
+- [ ] progress indicators (if output!=stdout && stdout == tty)
 - [ ] args: title, header, footer
 - [ ] new arg: template, (and @filename)
 - [ ] repos arg: support for @filename

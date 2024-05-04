@@ -5,6 +5,7 @@ import (
 	"os"
 	"path"
 	"regexp"
+	"strings"
 
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
@@ -13,6 +14,23 @@ import (
 var (
 	Verbose bool
 )
+
+func intro() {
+	fmt.Print(`
+Ghashboard is a tool for creating a Github Actions dashboard full of badges.
+
+The dashboard page is static and can be a Github README.md file.
+
+If you include private repos, the page should be hosted on Github (or your badges will get 404ed).
+
+The badge images will update automatically (by Github).
+
+Example usage:
+ghashboard --owners=owner1,owner2 --repos=repo1,repo2 --private=true --output=dashboard.md
+
+For detailed usage:
+ghashboard --help`)
+}
 
 func usage(f *pflag.FlagSet) {
 	fmt.Printf("Usage: %s [options] [file]\n", path.Base(os.Args[0]))
@@ -33,6 +51,11 @@ func usage(f *pflag.FlagSet) {
 }
 
 func initConfig(args []string) {
+
+	if len(args) == 0 {
+		intro()
+		os.Exit(0)
+	}
 	f := pflag.NewFlagSet("config", pflag.ExitOnError)
 	help := f.Bool("help", false, "Show help")
 	f.MarkHidden("help")
@@ -99,13 +122,13 @@ func initConfig(args []string) {
 	viper.BindPFlag("externals", f.Lookup("externals"))
 	viper.BindEnv("externals", "EXTERNALS", "INPUT_EXTERNALS")
 
-	f.String("format", "markdown", "Output format [ markdown | json | csv ]")
+	f.String("format", "markdown", "Output format [ "+strings.Join(GetStandardTemplates(), " | ")+" ]")
 	viper.BindPFlag("format", f.Lookup("format"))
 	viper.BindEnv("format", "FORMAT", "INPUT_FORMAT")
 
-	f.String("file", "dashboard.md", "File name (or - for stdout)")
-	viper.BindPFlag("file", f.Lookup("file"))
-	viper.BindEnv("file", "FILE", "INPUT_FILE")
+	f.String("output", "dashboard.md", "File name (or - for stdout)")
+	viper.BindPFlag("output", f.Lookup("output"))
+	viper.BindEnv("output", "OUTPUT", "OUTPUT_FILE")
 
 	f.Parse(args)
 

@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"fmt"
+	"strings"
 	"text/template"
 )
 
@@ -23,4 +24,20 @@ func GetStandardTemplate(templateName string) (*template.Template, error) {
 	}
 
 	return tmpl, nil
+}
+
+func GetStandardTemplates() []string {
+	files, readErr := templateFS.ReadDir("templates")
+	if readErr != nil {
+		panic(readErr)
+	}
+
+	var templateNames []string
+	for _, file := range files {
+		if strings.HasSuffix(file.Name(), ".tmpl") {
+			templateNames = append(templateNames, file.Name()[0:len(file.Name())-5])
+		}
+	}
+
+	return templateNames
 }
