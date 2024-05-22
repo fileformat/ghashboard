@@ -122,13 +122,13 @@ func initConfig(args []string) {
 	viper.BindPFlag("externals", f.Lookup("externals"))
 	viper.BindEnv("externals", "EXTERNALS", "INPUT_EXTERNALS")
 
-	f.String("format", "markdown", "Output format [ "+strings.Join(GetStandardTemplates(), " | ")+" ]")
+	f.String("format", "markdown", "Output format [ "+strings.Join(GetStandardTemplates(), " | ")+" | json ]")
 	viper.BindPFlag("format", f.Lookup("format"))
 	viper.BindEnv("format", "FORMAT", "INPUT_FORMAT")
 
 	f.String("output", "dashboard.md", "File name (or - for stdout)")
 	viper.BindPFlag("output", f.Lookup("output"))
-	viper.BindEnv("output", "OUTPUT", "OUTPUT_FILE")
+	viper.BindEnv("output", "OUTPUT", "INPUT_OUTPUT")
 
 	f.Parse(args)
 

@@ -124,7 +124,7 @@ func main() {
 		}
 	}
 
-	filename := viper.GetString("file")
+	filename := viper.GetString("output")
 	var writer io.Writer
 	if filename == "" || filename == "-" {
 		slog.Info("writing to stdout")
