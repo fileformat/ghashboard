@@ -46,6 +46,10 @@ func main() {
 
 	repos := viper_GetStringSlice("repos")
 	owners := viper_GetStringSlice("owners")
+	if len(owners) == 0 && len(repos) == 0 {
+		intro()
+		os.Exit(1)
+	}
 
 	includes := viper_GetStringSlice("include")
 	IncludeSet = make(map[string]struct{})
@@ -77,7 +81,7 @@ func main() {
 			theRepo, err := GetRepo(client, repo)
 			if err != nil {
 				slog.Error("unable to get repo", "error", err, "repo", repo)
-				os.Exit(1)
+				os.Exit(2)
 			}
 			allRepos = append(allRepos, theRepo)
 		}
@@ -87,13 +91,13 @@ func main() {
 		ownerRepos, err := GetRepos(client, owners)
 		if err != nil {
 			slog.Error("unable to get repos for owners", "error", err, "owners", owners)
-			os.Exit(1)
+			os.Exit(3)
 		}
 		allRepos = append(allRepos, ownerRepos...)
 	}
 	if len(allRepos) == 0 {
 		slog.Error("no repos found", "repos", repos, "owners", owners)
-		os.Exit(1)
+		os.Exit(4)
 	}
 
 	slog.Debug("repos found", "count", len(allRepos))
@@ -105,7 +109,7 @@ func main() {
 		workflows, err := GetWorkflowsForRepo(client, repo)
 		if err != nil {
 			slog.Error("unable to load workflows", "error", err, "repo", *repo.FullName)
-			os.Exit(1)
+			os.Exit(5)
 		}
 		slog.Info("workflows found", "repo", *repo.FullName, "count", len(workflows))
 		if empty || len(workflows) > 0 {
@@ -124,7 +128,7 @@ func main() {
 				xb, xbErr := GenerateExternalBadge(external, metaRepo.Repo)
 				if xbErr != nil {
 					slog.Error("unable to expand external badge", "error", xbErr, "external", external, "repo", *metaRepo.Repo.Name)
-					os.Exit(1)
+					os.Exit(6)
 				}
 				metaRepo.ExternalBadges = append(metaRepo.ExternalBadges, xb)
 			}
@@ -141,7 +145,7 @@ func main() {
 		file, openErr := os.Create(filename)
 		if openErr != nil {
 			slog.Error("unable to open file", "error", openErr, "filename", filename)
-			os.Exit(1)
+			os.Exit(7)
 		}
 		defer file.Close()
 		writer = file
@@ -152,14 +156,14 @@ func main() {
 		jsonStr, jsonErr := json.Marshal(allData)
 		if jsonErr != nil {
 			slog.Error("unable to marshal json", "error", jsonErr)
-			os.Exit(1)
+			os.Exit(8)
 		}
 		writer.Write(jsonStr)
 	} else {
 		tmpl, tmplErr := GetStandardTemplate(format)
 		if tmplErr != nil {
 			slog.Error("unable to open template", "error", tmplErr, "format", format)
-			os.Exit(1)
+			os.Exit(9)
 		}
 		mergeErr := tmpl.Execute(writer, &MergeData{
 			Title:  viper.GetString("title"),
@@ -169,7 +173,7 @@ func main() {
 		})
 		if mergeErr != nil {
 			slog.Error("unable to merge template", "error", mergeErr, "format", format)
-			os.Exit(1)
+			os.Exit(10)
 		}
 	}
 
