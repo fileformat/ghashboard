@@ -120,7 +120,7 @@ func getPrivateRepos(client *github.Client, owners []string) ([]*github.Reposito
 			_, ok := ownerSet[strings.ToLower(*repo.Owner.Login)]
 			if !ok {
 				// these are private repos you can see, but aren't in the list of owners
-				slog.Debug("skipping private repo %s", "repo", *repo.FullName)
+				slog.Debug("skipping private repo", "repo", *repo.FullName)
 				continue
 			}
 			if !*repo.Private {
