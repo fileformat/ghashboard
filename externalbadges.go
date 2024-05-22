@@ -52,6 +52,12 @@ var builtins = map[string]ExternalBadgeTmpl{
 		ImageTmpl:   template.Must(template.New("openissues_image").Parse(`https://img.shields.io/github/issues-raw/{{.FullName}}.svg?style=plastic`)),
 		LinkTmpl:    template.Must(template.New("openissues_link").Parse(`https://github.com/{{.FullName}}/issues`)),
 	},
+	"openprs": {
+		Name:        "Open PRs",
+		Description: "Github open pull requests",
+		ImageTmpl:   template.Must(template.New("openprs_image").Parse(`https://img.shields.io/github/issues-pr-raw/{{.FullName}}.svg?style=plastic`)),
+		LinkTmpl:    template.Must(template.New("openprs_link").Parse(`https://github.com/{{.FullName}}/pulls`)),
+	},
 	"lastcommit": {
 		Name:        "Last commit",
 		Description: "Most recent commit on default branch",
