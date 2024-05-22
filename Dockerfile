@@ -24,7 +24,7 @@ RUN go build \
     && upx ghashboard
 
 FROM scratch
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /build/ghashboard /bin/ghashboard
-WORKDIR /bin
 ENTRYPOINT ["/bin/ghashboard"]
 

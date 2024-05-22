@@ -4,6 +4,7 @@ cache/
 *.class
 /completions/
 crash.log
+dashboard.md
 dist/
 .DS_Store
 *.env
