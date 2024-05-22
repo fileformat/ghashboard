@@ -52,10 +52,6 @@ func usage(f *pflag.FlagSet) {
 
 func initConfig(args []string) {
 
-	if len(args) == 0 {
-		intro()
-		os.Exit(0)
-	}
 	f := pflag.NewFlagSet("config", pflag.ExitOnError)
 	help := f.Bool("help", false, "Show help")
 	f.MarkHidden("help")
