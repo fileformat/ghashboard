@@ -17,6 +17,13 @@ type MetaRepo struct {
 	ExternalBadges []*ExternalBadge   `json:"external"`
 }
 
+type MergeData struct {
+	Title  string      `json:"title"`
+	Header string      `json:"header"`
+	Footer string      `json:"footer"`
+	Repos  []*MetaRepo `json:"repos"`
+}
+
 var (
 	// version info
 	version string
@@ -94,7 +101,7 @@ func main() {
 	var allData []*MetaRepo
 	empty := viper.GetBool("empty")
 	for _, repo := range allRepos {
-		slog.Info("loading workflows", "repo", *repo.FullName)
+		slog.Debug("loading workflows", "repo", *repo.FullName)
 		workflows, err := GetWorkflowsForRepo(client, repo)
 		if err != nil {
 			slog.Error("unable to load workflows", "error", err, "repo", *repo.FullName)
@@ -154,7 +161,12 @@ func main() {
 			slog.Error("unable to open template", "error", tmplErr, "format", format)
 			os.Exit(1)
 		}
-		mergeErr := tmpl.Execute(writer, allData)
+		mergeErr := tmpl.Execute(writer, &MergeData{
+			Title:  viper.GetString("title"),
+			Header: viper.GetString("header"),
+			Footer: viper.GetString("footer"),
+			Repos:  allData,
+		})
 		if mergeErr != nil {
 			slog.Error("unable to merge template", "error", mergeErr, "format", format)
 			os.Exit(1)

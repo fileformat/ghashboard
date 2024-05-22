@@ -1,7 +1,7 @@
 {{/*
 description: "CSV file with one line per workflow"
 */}}Repo,Name,Image,Link
-{{- range . -}}
+{{- range .Repos -}}
     {{- $repo := .Repo.Name -}}
     {{- range .Workflows }}
 {{ $repo}}, {{.Name}}, {{ .BadgeURL }}, {{ .HTMLURL }}

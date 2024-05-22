@@ -1,6 +1,6 @@
 {{/*
 description: "Markdown snippet appropriate for embedding in a README.md file"
-*/}}{{ range . -}}
+*/}}{{ range .Repos -}}
 {{range .ExternalBadges}}[![{{.Name}}]({{.Image}})]({{.Link}}){{end}}
 {{range .Workflows}}[![{{ .Name }}]({{ .BadgeURL }})]({{.HtmlURL}}){{end}}
 {{ end -}}
