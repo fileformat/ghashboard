@@ -29,7 +29,8 @@ Example usage:
 ghashboard --owners=owner1,owner2 --repos=repo1,repo2 --private=true --output=dashboard.md
 
 For detailed usage:
-ghashboard --help`)
+ghashboard --help
+`)
 }
 
 func usage(f *pflag.FlagSet) {
@@ -39,15 +40,14 @@ func usage(f *pflag.FlagSet) {
 	fmt.Printf("\n")
 	fmt.Printf("%s\n", f.FlagUsages())
 	fmt.Printf("\n")
-	fmt.Printf("      file: output file (default: stdout)\n")
-	fmt.Printf("\n")
 	fmt.Printf("      options can also be set via environment variables\n")
-	fmt.Printf("      set GH_TOKEN to use a personal access token and avoid rate limit errors.\n")
+	fmt.Printf("      set GITHUB_TOKEN to use a personal access token and avoid rate limit errors.\n")
 	fmt.Printf("\n")
-	fmt.Printf("    built-in external badges:\n")
+	fmt.Printf("    external badges:\n")
 	for key, value := range getBuiltins() {
 		fmt.Printf("      %s - %s\n", key, value)
 	}
+	fmt.Printf("\n")
 }
 
 func initConfig(args []string) {

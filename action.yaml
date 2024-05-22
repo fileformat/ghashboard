@@ -28,8 +28,8 @@ inputs:
   externals:
     description:  "external badges to include"
     required:     false
-  file:
-    description:  "file to create (or use `-` for stdout)"
+  output:
+    description:  "output file to create (or `-` for stdout)"
     required:     false
     default:      "dashboard.md"
   forks:
@@ -37,7 +37,7 @@ inputs:
     required:     false
     default:      false
   format:
-    description:  "output format [ markdown | csv ]"
+    description:  "output format"
     required:     false
     default:      "markdown"
   inactive:
