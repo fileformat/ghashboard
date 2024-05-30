@@ -85,6 +85,11 @@ func getPublicReposForOwner(client *github.Client, owner string) ([]*github.Repo
 			if *repo.Private {
 				continue
 			}
+			_, skip := SkipSet[strings.ToLower(*repo.FullName)]
+			if skip {
+				slog.Debug("explicitly skipping repo", "repo", *repo.FullName)
+				continue
+			}
 			allRepos = append(allRepos, repo)
 		}
 
@@ -125,6 +130,11 @@ func getPrivateRepos(client *github.Client, owners []string) ([]*github.Reposito
 			}
 			if !*repo.Private {
 				slog.Warn("repo marked as public but returned from query", "repo", *repo.FullName)
+				continue
+			}
+			_, skip := SkipSet[strings.ToLower(*repo.FullName)]
+			if skip {
+				slog.Debug("explicitly skipping repo", "repo", *repo.FullName)
 				continue
 			}
 			allRepos = append(allRepos, repo)

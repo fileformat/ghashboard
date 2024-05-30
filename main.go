@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"os"
 	"strings"
+	"time"
 
 	github "github.com/google/go-github/v58/github"
 	"github.com/spf13/viper"
@@ -18,10 +19,11 @@ type MetaRepo struct {
 }
 
 type MergeData struct {
-	Title  string      `json:"title"`
-	Header string      `json:"header"`
-	Footer string      `json:"footer"`
-	Repos  []*MetaRepo `json:"repos"`
+	Created string      `json:"created"`
+	Title   string      `json:"title"`
+	Header  string      `json:"header"`
+	Footer  string      `json:"footer"`
+	Repos   []*MetaRepo `json:"repos"`
 }
 
 var (
@@ -34,6 +36,7 @@ var (
 	// workflow flags
 	IncludeSet map[string]struct{}
 	ExcludeSet map[string]struct{}
+	SkipSet    map[string]struct{}
 
 	// external badge flags
 	Externals []string
@@ -63,6 +66,12 @@ func main() {
 		ExcludeSet[strings.ToLower(exclude)] = struct{}{}
 	}
 
+	skips := viper_GetStringSlice("skip")
+	SkipSet = make(map[string]struct{})
+	for _, skip := range skips {
+		SkipSet[strings.ToLower(skip)] = struct{}{}
+	}
+
 	client := github.NewClient(nil)
 	token := viper.GetString("github-token")
 	if token != "" {
@@ -77,6 +86,14 @@ func main() {
 	var allRepos []*github.Repository
 
 	if len(repos) > 0 {
+		if repos[0][0] == '@' {
+			var atfileErr error
+			repos, atfileErr = loadAtFile(repos[0][1:])
+			if atfileErr != nil {
+				slog.Error("unable to load @file", "error", atfileErr, "filename", repos[0][1:])
+				os.Exit(11)
+			}
+		}
 		for _, repo := range repos {
 			theRepo, err := GetRepo(client, repo)
 			if err != nil {
@@ -151,9 +168,17 @@ func main() {
 		writer = file
 	}
 
+	mergeData := &MergeData{
+		Created: time.Now().UTC().Format("2006-01-02 15:04:05"),
+		Title:   viper.GetString("title"),
+		Header:  viper.GetString("header"),
+		Footer:  viper.GetString("footer"),
+		Repos:   allData,
+	}
+
 	format := viper.GetString("format")
 	if format == "json" {
-		jsonStr, jsonErr := json.Marshal(allData)
+		jsonStr, jsonErr := json.MarshalIndent(mergeData, "", "  ")
 		if jsonErr != nil {
 			slog.Error("unable to marshal json", "error", jsonErr)
 			os.Exit(8)
@@ -165,12 +190,7 @@ func main() {
 			slog.Error("unable to open template", "error", tmplErr, "format", format)
 			os.Exit(9)
 		}
-		mergeErr := tmpl.Execute(writer, &MergeData{
-			Title:  viper.GetString("title"),
-			Header: viper.GetString("header"),
-			Footer: viper.GetString("footer"),
-			Repos:  allData,
-		})
+		mergeErr := tmpl.Execute(writer, mergeData)
 		if mergeErr != nil {
 			slog.Error("unable to merge template", "error", mergeErr, "format", format)
 			os.Exit(10)

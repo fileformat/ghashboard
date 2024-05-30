@@ -73,6 +73,10 @@ func initConfig(args []string) {
 	viper.BindPFlag("repos", f.Lookup("repos"))
 	viper.BindEnv("repos", "REPOS", "INPUT_REPOS")
 
+	f.String("skip", "", "Repositories to skip")
+	viper.BindPFlag("skip", f.Lookup("skip"))
+	viper.BindEnv("skip", "SKIP", "INPUT_SKIP")
+
 	// deliberately no flag because security
 	viper.BindEnv("github-token", "INPUT_TOKEN", "GITHUB_TOKEN")
 

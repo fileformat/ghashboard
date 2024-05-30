@@ -8,59 +8,62 @@ branding:
 
 inputs:
 
-  owners:
-    description:  "list of owners"
-    required:     false
-  repos:
-    description:  "list of repos"
-    required:     false
   archived:
     description:  "include archived repos?"
     required:     false
-    default:      false
   empty:
-    description:  "include repos with no workflows"
+    description:  "include repos with no workflows (useful if you have external badges)"
     required:     false
-    default:      false
   exclude:
     description:  "workflows to exclude"
     required:     false
   externals:
-    description:  "external badges to include"
+    description:  "external badges to include (usually only work with public repos)"
     required:     false
-  output:
-    description:  "output file to create (or `-` for stdout)"
+  footer:
+    description:  "footer text"
     required:     false
-    default:      "dashboard.md"
   forks:
     description:  "include forked repos?"
     required:     false
-    default:      false
   format:
     description:  "output format"
     required:     false
-    default:      "markdown"
+  header:
+    description:  "header text"
+    required:     false
   inactive:
     description:  "include inactive workflows?"
     required:     false
-    default:      false
   include:
     description:  "workflows to include"
     required:     false
   log-level:
     description:  "log level [ debug | info | warn | error ]"
     required:     false
-    default:      "info"
+  output:
+    description:  "output file to create (or `-` for stdout)"
+    required:     false
+  owners:
+    description:  "list of owners (one of owner|repos is required)"
+    required:     false
   private:
-    description:  "include private repos?"
+    description:  "include private repos? (one of public|private must be true)"
     required:     false
-    default:      true
   public:
-    description:  "include public repos?"
+    description:  "include public repos? (one of public|private must be true)"
     required:     false
-    default:      true
+  repos:
+    description:  "list of repos (one of owner|repos is required)"
+    required:     false
+  skip:
+    description:  "do not include specific repos (use full owner/name)"
+    required:     false
+  title:
+    description:  "title text"
+    required:     false
   token:
-    description:  "Github token"
+    description:  "Github token (required for private repos and higher rate limits)"
     required:     false
 
 runs:
