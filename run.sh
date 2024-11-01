@@ -43,6 +43,8 @@ if [ -f ".env" ]; then
     export $(grep -v '^#' .env)
 fi
 
+export GITHUB_TOKEN=$(gh auth token)
+
 echo "INFO: running ghashboard with arguments: $@"
 ./dist/ghashboard "$@"
 
