@@ -60,7 +60,7 @@ func initConfig(args []string) {
 
 	f.String("log-level", "warn", "Log level [ debug | info | warn | error ]")
 	viper.BindPFlag("log-level", f.Lookup("log-level"))
-	viper.BindEnv("log-level", "LOG_LEVEL", "INPUT_LOG_LEVEL")
+	viper.BindEnv("log-level", "LOG_LEVEL", "INPUT_LOG-LEVEL", "INPUT_LOG_LEVEL")
 
 	/*
 	 * flags to build the repo list
