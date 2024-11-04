@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log/slog"
 	"strings"
 
@@ -35,6 +36,14 @@ func GetWorkflowsForRepo(client *github.Client, repo *github.Repository) ([]*git
 				if ok {
 					continue
 				}
+			}
+
+			if !strings.Contains(*workflow.BadgeURL, "/actions/workflow") {
+				var parts = strings.Split(*workflow.Path, "/")
+				var yaml = parts[len(parts)-1]
+				var newBadgeUrl = fmt.Sprintf("https://github.com/%s/actions/workflows/%s/badge.svg", *repo.FullName, yaml)
+				slog.Debug("Hack to fix busted Github API result", "repo", *repo.FullName, "badbadge", *workflow.BadgeURL, "goodbadge", newBadgeUrl)
+				*workflow.BadgeURL = newBadgeUrl
 			}
 			allWorkflows = append(allWorkflows, workflow)
 		}
