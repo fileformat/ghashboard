@@ -4,7 +4,6 @@
 [![release](https://github.com/fileformat/ghashboard/actions/workflows/release.yaml/badge.svg)](https://github.com/fileformat/ghashboard/actions/workflows/release.yaml)
 [![Version](https://img.shields.io/github/v/tag/fileformat/ghashboard?sort=semver&style=plastic&label=Version&labelColor=black&color=blue)](https://github.com/fileformat/ghashboard/releases)
 
-
 A tool for making dashboard pages with all the badges from your Github Actions.
 
 ## Examples
@@ -12,19 +11,21 @@ A tool for making dashboard pages with all the badges from your Github Actions.
 [![VectorLogoZone example](docs/images/thumbnails/08_result.png)](docs/images/screenshots/08_result.png "Example w/defaults")
 [![External badges example](docs/images/thumbnails/10_customized_result.png)](docs/images/screenshots/10_customized_result.png "Example w/additional external badges")
 
-## Pronunciation
-
-It is pronounced (in an upper-crust accent) "gosh-board", not "gashboard" like some sort of horror flick.
-
 ## Using via Github Actions
 
-Recursion detected:  Stack overflow!  ...just kidding!  This is actually a great way to run it.
+It works really well to as a generator for Github profiles (example: [workflow yaml](https://github.com/VectorLogoZone/.github/blob/main/.github/workflows/update.yaml) and [resulting profile](https://github.com/VectorLogoZone)).
 
-It works really well to as a generator for Github profiles (example: [code](https://github.com/VectorLogoZone/.github) and [result](https://github.com/VectorLogoZone)).
+You will need to give it a personal access token (PAT) that has rights to all the repos.  The standard `GITHUB_TOKEN` for the action is limited to only its own repo.
+
+This has to be a [Personal Access Token (classic)](https://github.com/settings/tokens).  If you are only doing public repos, you can give it just the single `repo:public_repo` permission.  If you are doing private repos, you need to give it the whole `repo` permission.
+
+I wasn't able to get a fine-grained token to work, though theoretically it should be possible.
 
 ## Using via CLI
 
 Download the latest version from the [Github Releases page](https://github.com/fileformat/ghashboard/releases)
+
+You can use `gh auth token` to get  working access token.
 
 A sample command:
 ```
@@ -36,7 +37,9 @@ ghashboard --owners=google,spf13
 
 Either as inputs for the Github Action or flags for the CLI.
 
-Note: either `owners` or `repos` is required.
+Notes:
+ * either `owners` or `repos` is required.
+ * either `public` or `private` must be true
 
 | Name       |  Description          |
 | ---------- |  -------------------- |
@@ -49,16 +52,28 @@ Note: either `owners` or `repos` is required.
 |  `format` |  output format: `csv`, `markdown` or `json`.  `json` is good for debugging.  (default is `markdown`) |
 |  `header` |  header text |
 |  `inactive` |  include inactive workflows? |
-|  `include` |  workflows to include: others will be skipped (comma-separated list)) |
+|  `include` |  workflows to include: others will be skipped (comma-separated list) |
 |  `log-level` |  log level: `debug`, `info`, `warn` or `error` |
 |  `output` |  output file to create (or `-` for stdout) |
-|  `owners` |  list of owners  |
-|  `private` |  include private repos? (one of public|private must be true) |
-|  `public` |  include public repos? (one of public|private must be true) |
-|  `repos` |  list of repos |
+|  `owners` |  list of owners (comma-separated list) |
+|  `private` |  include private repos? |
+|  `public` |  include public repos? |
+|  `repos` |  list of repos (comma-separated list) |
 |  `skip` |  exclude specific repos (use `owner/name`) |
 |  `title` |  title text |
 |  `token` |  Github token: not absolutely required, but you will run into rate-limits without one |
+
+## Frequently Asked Questions
+
+### How do you pronounce it?
+It is pronounced (in an upper-crust accent) "gosh-board", not "gashboard" like some sort of horror flick.
+
+### Can I have only a specific set of repos?
+Yes!  Make a list outside of ghashboard in a file (one line per repo) and use `--repos @repolist.txt`.  You can build a list with the [gh](https://cli.github.com/) CLI.  For example: `gh repo list --json nameWithOwner --jq '.[].nameWithOwner'`.
+
+### Why is are the badges showing up as broken images for my private repos?
+The page needs to be hosted on Github: otherwise the Github doesn't know who you are and that you have the necessary rights.
+
 
 ## Developing
 
